@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Navbar = ({ brand }) => {
+const Navbar = ({ title }) => {
 	return (
 		<nav className="navbar navbar-dark bg-dark">
 			<div className="container">
 				<a className="navbar-brand text-uppercase" href="/">
-					{brand}
+					{title}
 				</a>
 			</div>
 		</nav>
