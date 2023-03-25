@@ -1,0 +1,21 @@
+.divFilter {
+	display: block;
+	text-align: right;
+	margin: 10px;
+}
+
+.inputFilter {
+	max-width: 400px;
+	width: 300px;
+	border-radius: 5px;
+	border: 1px solid;
+	text-indent: 10px;
+}
+
+.numberFilter {
+	margin: 10px;
+	color: white;
+	background-color: cornflowerblue;
+	font-size: large;
+	font-family: cursive;
+}
