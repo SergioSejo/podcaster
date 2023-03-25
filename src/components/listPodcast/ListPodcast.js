@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import podcastService from '../../services/podcastService';
 import NoResults from './NoResults';
 
-import logo from '../../imgs/not97.png';
-
 const ListPodcast = () => {
 	const pdService = new podcastService();
 	const [listPd, setListPd] = useState([]);
@@ -49,7 +47,11 @@ const ListPodcast = () => {
 					filterPd.map((item, index) => (
 						<div key={index} className="col-lg-3 col-md-6 col-sm-12 mb-4">
 							<div className="card" style={{ minWidth: '200px' }}>
-								<img className="card-img-top" src={logo} alt="podcast" />
+								<img
+									className="card-img-top"
+									src={item['im:image'][2].label}
+									alt="podcast"
+								/>
 								<div className="card-body text-center">
 									<h5 className="card-title">{item['im:name'].label}</h5>
 									<p className="card-text">Author: {item['im:artist'].label}</p>
