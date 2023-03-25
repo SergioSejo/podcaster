@@ -10,7 +10,7 @@ const ListPodcast = () => {
 	const [filterPd, setFilterPd] = useState([]);
 	const [countPd, setCountPd] = useState([]);
 
-	useEffect(async () => {
+	useEffect(() => {
 		const getPodcasts = async () => {
 			const result = await pdService.get100PodcastsApple();
 			localStorage.setItem('list-podcasts', JSON.stringify(result));
@@ -18,7 +18,7 @@ const ListPodcast = () => {
 		};
 		let result;
 		if (needCallApi()) {
-			result = await getPodcasts();
+			result = getPodcasts();
 		}
 		result = JSON.parse(localStorage.getItem('list-podcasts'));
 		setListPd(result);
@@ -52,7 +52,10 @@ const ListPodcast = () => {
 			<div className="row">
 				{filterPd.length > 0 ? (
 					filterPd.map((item, index) => (
-						<div key={index} className="col-lg-3 col-md-6 col-sm-12 mb-4">
+						<div
+							key={item.id.attributes['im:id']}
+							className="col-lg-3 col-md-6 col-sm-12 mb-4"
+						>
 							<div className="card" style={{ minWidth: '200px' }}>
 								<img
 									className="card-img-top"
