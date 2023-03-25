@@ -18,6 +18,8 @@
 	background-color: cornflowerblue;
 	font-size: large;
 	font-family: cursive;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .divNoResults {
@@ -29,4 +31,14 @@
 .spanNoResults {
 	font-size: x-large;
 	font-family: initial;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 8px;
+	text-align: center;
+	color: white;
 }
