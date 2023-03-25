@@ -1,9 +1,9 @@
-import ZaraPodcast from './components/ZaraPodcast';
+import { AppRouter } from './router/AppRouter';
 
 function App() {
 	return (
 		<>
-			<ZaraPodcast />
+			<AppRouter />
 		</>
 	);
 }

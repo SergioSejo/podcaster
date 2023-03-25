@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import podcastService from '../../services/podcastService';
 import { needCallApi } from '../../helpers/functions';
 import NoResults from './NoResults';
 
 const ListPodcast = () => {
+	const navigate = useNavigate();
 	const pdService = new podcastService();
 	const [listPd, setListPd] = useState([]);
 	const [filterPd, setFilterPd] = useState([]);
@@ -38,6 +40,10 @@ const ListPodcast = () => {
 		setCountPd(result.length);
 	};
 
+	const onclickCard = (event, key) => {
+		navigate(`/podcast/${key}`);
+	};
+
 	return (
 		<div className="container">
 			<div className="divFilter">
@@ -51,10 +57,13 @@ const ListPodcast = () => {
 			</div>
 			<div className="row">
 				{filterPd.length > 0 ? (
-					filterPd.map((item, index) => (
+					filterPd.map((item) => (
 						<div
 							key={item.id.attributes['im:id']}
 							className="col-lg-3 col-md-6 col-sm-12 mb-4"
+							onClick={(event) =>
+								onclickCard(event, item.id.attributes['im:id'])
+							}
 						>
 							<div className="card" style={{ minWidth: '200px' }}>
 								<img
