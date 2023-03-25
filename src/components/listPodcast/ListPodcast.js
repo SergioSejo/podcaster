@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import podcastService from '../../services/podcastService';
+import { needCallApi } from '../../helpers/functions';
 import NoResults from './NoResults';
 
 const ListPodcast = () => {
@@ -9,17 +10,23 @@ const ListPodcast = () => {
 	const [filterPd, setFilterPd] = useState([]);
 	const [countPd, setCountPd] = useState([]);
 
-	useEffect(() => {
-		const getPd = async () => {
-			const result = await pdService.getPodcasts();
-			setListPd(result);
-			setFilterPd(result);
-			setCountPd(result.length);
+	useEffect(async () => {
+		const getPodcasts = async () => {
+			const result = await pdService.get100PodcastsApple();
+			localStorage.setItem('list-podcasts', JSON.stringify(result));
+			localStorage.setItem('get-podcasts', new Date().getTime());
 		};
-		getPd();
+		let result;
+		if (needCallApi()) {
+			result = await getPodcasts();
+		}
+		result = JSON.parse(localStorage.getItem('list-podcasts'));
+		setListPd(result);
+		setFilterPd(result);
+		setCountPd(result.length);
 	}, []);
 
-	const filterChange = (event) => {
+	const handleInputChange = (event) => {
 		let text = event.target.value.toLowerCase();
 		let result = listPd.filter((option) => {
 			return (
@@ -39,7 +46,7 @@ const ListPodcast = () => {
 					type="text"
 					className="inputFilter"
 					placeholder="Filter podcasts..."
-					onChange={filterChange}
+					onChange={handleInputChange}
 				/>
 			</div>
 			<div className="row">
