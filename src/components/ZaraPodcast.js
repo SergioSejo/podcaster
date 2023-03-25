@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from './Navbar';
-import Footer from './Footer';
-import ListPodcast from './ListPodcast';
+import Navbar from './ui/Navbar';
+import Footer from './ui/Footer';
+import ListPodcast from './listPodcast/ListPodcast';
 
 const ZaraPodcast = () => {
 	return (
