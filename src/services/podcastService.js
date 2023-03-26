@@ -16,10 +16,9 @@ class podcastService {
 		}
 	};
 
-	getPodcastDetail = async (id) => {
+	getDetailPodcast = async (id) => {
 		try {
 			const res = await axios.get(`${urlDetail}${id}&country=no`);
-			console.log('res: ', res);
 			return res.data.results[0];
 		} catch (ex) {
 			console.log('podcastService.getPodcastDetail: ', ex);

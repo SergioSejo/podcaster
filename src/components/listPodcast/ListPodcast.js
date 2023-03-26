@@ -1,46 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import podcastService from '../../services/podcastService';
-import { needCallApi } from '../../helpers/functions';
+import { getPodcasts, getDetailPodcast } from '../../actions/podcast';
 import NoResults from './NoResults';
 
 const ListPodcast = () => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const pdService = new podcastService();
-	const [listPd, setListPd] = useState([]);
-	const [filterPd, setFilterPd] = useState([]);
+	const [filterPodcast, setFilterPodcast] = useState([]);
 	const [countPd, setCountPd] = useState([]);
+	const { listPodcasts } = useSelector((state) => state.podcast);
 
 	useEffect(() => {
-		const getPodcasts = async () => {
-			const result = await pdService.get100PodcastsApple();
-			localStorage.setItem('list-podcasts', JSON.stringify(result));
-			localStorage.setItem('get-podcasts', new Date().getTime());
-		};
-		let result;
-		if (needCallApi()) {
-			result = getPodcasts();
-		}
-		result = JSON.parse(localStorage.getItem('list-podcasts'));
-		setListPd(result);
-		setFilterPd(result);
-		setCountPd(result.length);
+		dispatch(getPodcasts());
 	}, []);
+
+	useEffect(() => {
+		if (listPodcasts) {
+			setFilterPodcast(listPodcasts);
+			setCountPd(listPodcasts.length);
+		} else {
+			setFilterPodcast([]);
+			setCountPd(0);
+		}
+	}, [listPodcasts]);
 
 	const handleInputChange = (event) => {
 		let text = event.target.value.toLowerCase();
-		let result = listPd.filter((option) => {
+		let filterList = listPodcasts.filter((option) => {
 			return (
 				option['im:name'].label.toLowerCase().includes(text) ||
 				option['im:artist'].label.toLowerCase().includes(text)
 			);
 		});
-		setFilterPd(result);
-		setCountPd(result.length);
+		setFilterPodcast(filterList);
+		if (filterList) {
+			setCountPd(filterList.length);
+		}
 	};
 
 	const onclickCard = (event, key) => {
+		dispatch(getDetailPodcast(key));
 		navigate(`/podcast/${key}`);
 	};
 
@@ -56,16 +57,19 @@ const ListPodcast = () => {
 				/>
 			</div>
 			<div className="row">
-				{filterPd.length > 0 ? (
-					filterPd.map((item) => (
+				{filterPodcast?.length > 0 ? (
+					filterPodcast.map((item) => (
 						<div
 							key={item.id.attributes['im:id']}
 							className="col-lg-3 col-md-6 col-sm-12 mb-4"
-							onClick={(event) =>
-								onclickCard(event, item.id.attributes['im:id'])
-							}
 						>
-							<div className="card" style={{ minWidth: '200px' }}>
+							<div
+								className="card cursorPointer"
+								style={{ minWidth: '200px' }}
+								onClick={(event) =>
+									onclickCard(event, item.id.attributes['im:id'])
+								}
+							>
 								<img
 									className="card-img-top"
 									src={item['im:image'][2].label}

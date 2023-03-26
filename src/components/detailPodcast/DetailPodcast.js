@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-import podcastService from '../../services/podcastService';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const DetailPodcast = () => {
-	const pdService = new podcastService();
 	const [detail, setDetail] = useState([]);
-	const { id } = useParams();
+	const { listPodcasts, detailPodcast } = useSelector((state) => state.podcast);
+
 	useEffect(() => {
-		const getDetail = async () => {
-			let result = await pdService.getPodcastDetail(id);
-			setDetail(result);
-		};
-		getDetail();
-	}, []);
+		if (detailPodcast) {
+			setDetail(detailPodcast);
+		} else {
+			setDetail([]);
+		}
+	}, [detailPodcast]);
 
 	return (
 		<div className="container" style={{ marginTop: '30px' }}>

@@ -47,3 +47,7 @@ footer {
 .episodes {
 	margin: 10px;
 }
+
+.cursorPointer {
+	cursor: pointer;
+}
