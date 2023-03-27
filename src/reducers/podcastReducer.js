@@ -3,7 +3,7 @@ import { types } from '../types/types';
 const initialState = {
 	listPodcasts: null,
 	detailPodcast: null,
-	pageActive: 0,
+	feedPodcast: null,
 };
 
 export const podcastReducer = (state = initialState, action) => {
@@ -13,17 +13,15 @@ export const podcastReducer = (state = initialState, action) => {
 				...state,
 				listPodcasts: action.payload,
 			};
-		case types.activePodcast:
+		case types.detailPodcast:
 			return {
 				...state,
-				pageActive: 1,
 				detailPodcast: action.payload,
 			};
-		case types.resetPodcast:
+		case types.feedPodcast:
 			return {
 				...state,
-				pageActive: 0,
-				detailPodcast: null,
+				feedPodcast: action.payload,
 			};
 		default:
 			return state;

@@ -1,15 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-
-import { reset } from '../../actions/podcast';
 
 const Navbar = ({ title }) => {
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const onclickTitle = () => {
-		dispatch(reset());
 		navigate('/');
 	};
 	return (
