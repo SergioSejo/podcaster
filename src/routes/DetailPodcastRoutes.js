@@ -1,4 +1,4 @@
-import DetailPodcast from '../components/detailPodcast/DetailPodcast';
+import DetailPodcast from '../components/DetailPodcast';
 
 export const DetailPodcastRoutes = () => {
 	return (

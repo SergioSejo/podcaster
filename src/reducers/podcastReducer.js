@@ -4,6 +4,7 @@ const initialState = {
 	listPodcasts: null,
 	detailPodcast: null,
 	feedPodcast: null,
+	episode: null,
 };
 
 export const podcastReducer = (state = initialState, action) => {
@@ -22,6 +23,11 @@ export const podcastReducer = (state = initialState, action) => {
 			return {
 				...state,
 				feedPodcast: action.payload,
+			};
+		case types.getEpisode:
+			return {
+				...state,
+				episode: action.payload,
 			};
 		default:
 			return state;

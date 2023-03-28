@@ -1,4 +1,4 @@
-import ListPodcast from '../components/listPodcast/ListPodcast';
+import ListPodcast from '../components/ListPodcast';
 
 export const ListPodcastRoutes = () => {
 	return (

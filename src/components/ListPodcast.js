@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { getPodcasts } from '../../actions/podcast';
-import NoResults from '../ui/NoResults';
+import { getPodcasts, getDetailPodcast } from '../actions/podcast';
+import NoResults from './ui/NoResults';
 
 const ListPodcast = () => {
 	const dispatch = useDispatch();
@@ -41,6 +41,7 @@ const ListPodcast = () => {
 	};
 
 	const onclickCard = (event, key) => {
+		dispatch(getDetailPodcast(key));
 		navigate(`/podcast/${key}`);
 	};
 

@@ -72,3 +72,8 @@ footer {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+
+.audio {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}

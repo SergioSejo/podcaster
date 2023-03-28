@@ -77,3 +77,21 @@ export const updateFeedPodcast = (feed) => {
 		payload: feed,
 	};
 };
+
+export const getEpisode = (listEpisodes, idEpisode) => {
+	return async (dispatch) => {
+		console.log('GETEPISODE');
+		let result = listEpisodes.filter((option) => {
+			return idEpisode == option.guid[0]._;
+		});
+		let episode = result ? result[0] : null;
+		dispatch(updateEpisode(episode));
+	};
+};
+
+export const updateEpisode = (episode) => {
+	return {
+		type: types.getEpisode,
+		payload: episode,
+	};
+};
