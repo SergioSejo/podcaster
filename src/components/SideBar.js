@@ -1,15 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
+import { updateEpisode } from '../actions/podcast';
 
 const SideBar = () => {
 	const { idPodcast, idEpisode } = useParams();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { feedPodcast } = useSelector((state) => state.podcast);
 
 	const onclickSidebar = () => {
 		if (idEpisode) {
 			navigate(`/podcast/${idPodcast}/`);
+			dispatch(updateEpisode(null));
 		}
 	};
 

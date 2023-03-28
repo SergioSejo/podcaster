@@ -11,6 +11,7 @@ const convertXMLtoJson = require('xml2js');
 export const getPodcasts = () => {
 	return async (dispatch) => {
 		let list;
+		dispatch(changeLoading(true));
 		if (needGetListPodcasts()) {
 			const pdService = new podcastService();
 			list = await pdService.get100PodcastsApple();
@@ -34,6 +35,7 @@ export const updateListPodcasts = (list) => {
 export const getDetailPodcast = (id) => {
 	return async (dispatch) => {
 		let detail;
+		dispatch(changeLoading(true));
 		if (needGetDetailPodcast(id)) {
 			const pdService = new podcastService();
 			detail = await pdService.getDetailPodcast(id);
@@ -41,14 +43,15 @@ export const getDetailPodcast = (id) => {
 				localStorage.setItem(`detail-podcast-${id}`, JSON.stringify(detail));
 				localStorage.setItem(`lastTime-get-detail-${id}`, new Date().getTime());
 				dispatch(updateDetailPodcast(detail));
-				dispatch(getEpisodesPodcast(detail.feedUrl));
+				dispatch(getFeedPodcast(detail.feedUrl));
 			} else {
 				dispatch(updateDetailPodcast(null));
+				dispatch(changeLoading(false));
 			}
 		} else {
 			detail = JSON.parse(localStorage.getItem(`detail-podcast-${id}`));
 			dispatch(updateDetailPodcast(detail));
-			dispatch(getEpisodesPodcast(detail.feedUrl));
+			dispatch(getFeedPodcast(detail.feedUrl));
 		}
 	};
 };
@@ -60,10 +63,10 @@ export const updateDetailPodcast = (detail) => {
 	};
 };
 
-export const getEpisodesPodcast = (url) => {
+export const getFeedPodcast = (url) => {
 	return async (dispatch) => {
 		const pdService = new podcastService();
-		const episodes = await pdService.getEpisodesPodcast(url);
+		const episodes = await pdService.getFeedPodcast(url);
 		convertXMLtoJson.parseString(episodes, function (err, result) {
 			let feed = result?.rss.channel[0];
 			dispatch(updateFeedPodcast(feed));
@@ -80,7 +83,6 @@ export const updateFeedPodcast = (feed) => {
 
 export const getEpisode = (listEpisodes, idEpisode) => {
 	return async (dispatch) => {
-		console.log('GETEPISODE');
 		let result = listEpisodes.filter((option) => {
 			return idEpisode == option.guid[0]._;
 		});
@@ -93,5 +95,18 @@ export const updateEpisode = (episode) => {
 	return {
 		type: types.getEpisode,
 		payload: episode,
+	};
+};
+
+export const changeLoading = (mode) => {
+	return {
+		type: types.changeLoading,
+		payload: mode,
+	};
+};
+
+export const reset = () => {
+	return {
+		type: types.reset,
 	};
 };

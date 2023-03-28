@@ -26,7 +26,7 @@ class podcastService {
 		}
 	};
 
-	getEpisodesPodcast = async (url) => {
+	getFeedPodcast = async (url) => {
 		try {
 			const res = await axios.get(url, {
 				mode: 'cors',

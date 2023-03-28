@@ -18,7 +18,7 @@ const Episode = () => {
 	}, []);
 
 	useEffect(() => {
-		if (feedPodcast && !episode) {
+		if (feedPodcast) {
 			dispatch(getEpisode(feedPodcast.item, idEpisode));
 		}
 	}, [feedPodcast]);

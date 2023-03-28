@@ -11,7 +11,7 @@ const DetailPodcast = () => {
 	const { idPodcast } = useParams();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { feedPodcast } = useSelector((state) => state.podcast);
+	const { feedPodcast, isloading } = useSelector((state) => state.podcast);
 
 	useEffect(() => {
 		if (!feedPodcast) {
@@ -78,7 +78,7 @@ const DetailPodcast = () => {
 					</div>
 				</div>
 			) : (
-				<NoResults text="El id del podcast es incorrecto" />
+				!isloading && <NoResults text="El id del podcast es incorrecto" />
 			)}
 		</div>
 	);

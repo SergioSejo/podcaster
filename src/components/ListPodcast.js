@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { getPodcasts, getDetailPodcast } from '../actions/podcast';
+import { getPodcasts, getDetailPodcast, reset } from '../actions/podcast';
 import NoResults from './ui/NoResults';
 
 const ListPodcast = () => {
@@ -14,6 +14,7 @@ const ListPodcast = () => {
 
 	useEffect(() => {
 		dispatch(getPodcasts());
+		dispatch(reset());
 	}, []);
 
 	useEffect(() => {

@@ -1,6 +1,7 @@
 import { types } from '../types/types';
 
 const initialState = {
+	isloading: false,
 	listPodcasts: null,
 	detailPodcast: null,
 	feedPodcast: null,
@@ -13,6 +14,7 @@ export const podcastReducer = (state = initialState, action) => {
 			return {
 				...state,
 				listPodcasts: action.payload,
+				isloading: false,
 			};
 		case types.detailPodcast:
 			return {
@@ -23,11 +25,24 @@ export const podcastReducer = (state = initialState, action) => {
 			return {
 				...state,
 				feedPodcast: action.payload,
+				isloading: false,
 			};
 		case types.getEpisode:
 			return {
 				...state,
 				episode: action.payload,
+			};
+		case types.changeLoading:
+			return {
+				...state,
+				isloading: action.payload,
+			};
+		case types.reset:
+			return {
+				...state,
+				detailPodcast: null,
+				feedPodcast: null,
+				episode: null,
 			};
 		default:
 			return state;

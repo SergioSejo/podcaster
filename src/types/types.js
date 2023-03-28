@@ -3,4 +3,6 @@ export const types = {
 	detailPodcast: 'Get detail of podcast',
 	feedPodcast: 'Get contain in feedUrl',
 	getEpisode: 'Get episode from podcast',
+	changeLoading: 'Set loading true or false',
+	reset: 'Set null all except listPodcasts',
 };
