@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { reset } from '../../actions/podcast';
 import loading from '../../imgs/loading.gif';
+import loadingProd from '../../imgs/loadingProd.gif';
 
 const Navbar = ({ title }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { isloading } = useSelector((state) => state.podcast);
+	const { isloading, environment } = useSelector((state) => state.podcast);
 
 	const onclickTitle = () => {
 		dispatch(reset());
@@ -23,9 +24,14 @@ const Navbar = ({ title }) => {
 				>
 					{title}
 				</a>
+				<p>{process.env.NODE_ENV}</p>
 				{isloading && (
 					<div>
-						<img src={loading} />
+						{environment == '1' ? (
+							<img src={loadingProd} />
+						) : (
+							<img src={loading} />
+						)}
 					</div>
 				)}
 			</div>

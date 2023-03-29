@@ -4,6 +4,7 @@ import podcastService from '../services/podcastService';
 import {
 	needGetListPodcasts,
 	needGetDetailPodcast,
+	getIdEpisode,
 } from '../helpers/functions';
 
 const convertXMLtoJson = require('xml2js');
@@ -84,7 +85,8 @@ export const updateFeedPodcast = (feed) => {
 export const getEpisode = (listEpisodes, idEpisode) => {
 	return async (dispatch) => {
 		let result = listEpisodes.filter((option) => {
-			return idEpisode == option.guid[0]._;
+			let compareGuid = getIdEpisode(option.guid[0]);
+			return idEpisode == compareGuid;
 		});
 		let episode = result ? result[0] : null;
 		dispatch(updateEpisode(episode));
@@ -101,6 +103,13 @@ export const updateEpisode = (episode) => {
 export const changeLoading = (mode) => {
 	return {
 		type: types.changeLoading,
+		payload: mode,
+	};
+};
+
+export const setEnvironment = (mode) => {
+	return {
+		type: types.setEnvironment,
 		payload: mode,
 	};
 };

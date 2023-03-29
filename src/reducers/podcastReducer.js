@@ -1,6 +1,7 @@
 import { types } from '../types/types';
 
 const initialState = {
+	environment: 0,
 	isloading: false,
 	listPodcasts: null,
 	detailPodcast: null,
@@ -36,6 +37,11 @@ export const podcastReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isloading: action.payload,
+			};
+		case types.setEnvironment:
+			return {
+				...state,
+				environment: action.payload,
 			};
 		case types.reset:
 			return {

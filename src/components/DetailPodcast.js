@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { formatDate } from '../helpers/functions';
+import { formatDate, getIdEpisode } from '../helpers/functions';
 import { getDetailPodcast, getEpisode } from '../actions/podcast';
 import SideBar from './SideBar';
 import NoResults from './ui/NoResults';
@@ -20,8 +20,9 @@ const DetailPodcast = () => {
 	}, []);
 
 	const onclickEpisode = (event, key) => {
-		dispatch(getEpisode(feedPodcast.item, key));
-		navigate(`/podcast/${idPodcast}/episode/${key}`);
+		let id = getIdEpisode(key);
+		dispatch(getEpisode(feedPodcast.item, id));
+		navigate(`/podcast/${idPodcast}/episode/${id}`);
 	};
 
 	return (
@@ -40,39 +41,41 @@ const DetailPodcast = () => {
 						</div>
 						<div className="card row">
 							<div className="episodes">
-								<table className="table table-striped table-hover table-wrapper-scroll episodeScrollbar">
-									<thead>
-										<tr>
-											<th className="col-7">Title</th>
-											<th className="col-3">Date</th>
-											<th className="col-2">Duration</th>
-										</tr>
-									</thead>
-									<tbody>
-										{feedPodcast.item?.length > 0 ? (
-											feedPodcast.item?.map((item) => (
-												<tr key={item.guid[0]._}>
-													<td>
-														<a
-															className="cursorPointer"
-															onClick={(event) =>
-																onclickEpisode(event, item.guid[0]._)
-															}
-														>
-															{item.title[0]}
-														</a>
-													</td>
-													<td>{formatDate(item.pubDate[0])}</td>
-													<td>{item['itunes:duration']}</td>
-												</tr>
-											))
-										) : (
+								<div className="episodeScrollbar">
+									<table className="table table-striped table-hover">
+										<thead>
 											<tr>
-												<td>No hay resultados</td>
+												<th className="col-7">Title</th>
+												<th className="col-3">Date</th>
+												<th className="col-2">Duration</th>
 											</tr>
-										)}
-									</tbody>
-								</table>
+										</thead>
+										<tbody>
+											{feedPodcast.item?.length > 0 ? (
+												feedPodcast.item?.map((item) => (
+													<tr key={item.guid[0]._}>
+														<td>
+															<a
+																className="cursorPointer"
+																onClick={(event) =>
+																	onclickEpisode(event, item.guid[0])
+																}
+															>
+																{item.title[0]}
+															</a>
+														</td>
+														<td>{formatDate(item.pubDate[0])}</td>
+														<td>{item['itunes:duration']}</td>
+													</tr>
+												))
+											) : (
+												<tr>
+													<td>No hay resultados</td>
+												</tr>
+											)}
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -23,3 +23,8 @@ export const formatDate = (date) => {
 	let year = newDate.getFullYear();
 	return `${day}/${month}/${year}`;
 };
+
+export const getIdEpisode = (key) => {
+	let guid = key instanceof Object;
+	return guid ? key._ : key;
+};

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import parse from 'html-react-parser';
 
 import { getDetailPodcast, getEpisode } from '../actions/podcast';
 import SideBar from './SideBar';
@@ -36,13 +37,15 @@ const Episode = () => {
 					<div className="col-lg-9">
 						<div className="card row">
 							<h3 className="episodes">{episode?.title[0]}</h3>
-							<i>{episode.description[0]}</i>
-							<audio controls className="audio">
-								<source
-									src={episode?.enclosure[0].$.url}
-									type={episode.enclosure[0].$.type}
-								/>
-							</audio>
+							<div className="episodeScrollbar">
+								<i>{parse(episode.description[0])}</i>
+								<audio controls className="audio">
+									<source
+										src={episode?.enclosure[0].$.url}
+										type={episode.enclosure[0].$.type}
+									/>
+								</audio>
+							</div>
 						</div>
 					</div>
 				</div>

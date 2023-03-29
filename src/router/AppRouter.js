@@ -6,8 +6,12 @@ import Footer from '../components/ui/Footer';
 import { ListPodcastRoutes } from '../routes/ListPodcastRoutes';
 import { DetailPodcastRoutes } from '../routes/DetailPodcastRoutes';
 import { EpisodeRoutes } from '../routes/EpisodeRoutes';
+import { useDispatch } from 'react-redux';
+import { setEnvironment } from '../actions/podcast';
 
 export const AppRouter = () => {
+	const dispatch = useDispatch();
+	dispatch(setEnvironment(process.env.REACT_APP_NO_RESULTS));
 	return (
 		<>
 			<Navbar title="Podcaster" />
